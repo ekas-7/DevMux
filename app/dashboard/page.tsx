@@ -2,113 +2,125 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { useState } from "react";
+import Meet from '../components/dashboard/Meet';
+import PreviousMeets from '../components/dashboard/PreviousMeets';
+import Friends from '../components/dashboard/Friends';
+import IncomingRequests from '../components/dashboard/IncomingRequests';
+import UserSearch from '../components/dashboard/UserSearch';
 
 export default function Dashboard() {
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated() {
-      redirect('/api/auth/signin');
-    },
-  });
+  const { data: session } = useSession();
+  const [activeComponent, setActiveComponent] = useState('meet');
 
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/users/status', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: 'offline' }),
+      });
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+    await signOut({ callbackUrl: '/' });
+  };
 
-  if (status === "loading") {
-    return <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">Loading...</div>;
-  }
-
-  const renderContent = () => {
-    switch (activeSection) {
-      case 'dashboard':
-        return <h2 className="text-2xl font-bold">Welcome to Dashboard</h2>;
+  const renderComponent = () => {
+    switch (activeComponent) {
       case 'meet':
-        return <h2 className="text-2xl font-bold">Meet Section</h2>;
-      case 'previousMeets':
-        return <h2 className="text-2xl font-bold">Previous Meets</h2>;
+        return <Meet />;
       case 'friends':
-        return <h2 className="text-2xl font-bold">Friends List</h2>;
+        return <Friends />;
       case 'requests':
-        return <h2 className="text-2xl font-bold">Incoming Requests</h2>;
+        return <IncomingRequests />;
+      case 'search':
+        return <UserSearch />;
+      case 'previous':
+        return <PreviousMeets />;
       default:
-        return <h2 className="text-2xl font-bold">Welcome to Dashboard</h2>;
+        return <Meet />;
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-b from-gray-900 via-black to-gray-800 text-white">
-      {/* Left Sidebar Navigation */}
-      <div className="w-64 min-h-screen bg-gray-800 border-r border-gray-700 p-6">
-        <div className="flex flex-col items-center mb-8">
-          <img 
-            src={session.user?.image ?? ''} 
-            alt="Profile" 
-            className="w-16 h-16 rounded-full border-2 border-gray-700 shadow-lg mb-3"
-          />
-          <span className="text-sm font-medium text-gray-300">{session.user?.email}</span>
+    <div className="flex h-screen">
+      {/* Left Sidebar */}
+      <div className="w-64 bg-gray-800 h-full p-4 flex flex-col">
+        <div className="mb-8">
+          <span className="text-gray-300 text-lg">{session?.user?.name}</span>
         </div>
-
-        <nav className="space-y-4">
-          <button
-            onClick={() => setActiveSection('dashboard')}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeSection === 'dashboard' 
-                ? 'bg-gray-700 text-white' 
-                : 'text-gray-300 hover:bg-gray-700/50'
-            }`}
-          >
-            Dashboard
-          </button>
-          <button
-            onClick={() => setActiveSection('meet')}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeSection === 'meet' 
-                ? 'bg-gray-700 text-white' 
-                : 'text-gray-300 hover:bg-gray-700/50'
-            }`}
-          >
-            Meet
-          </button>
-          <button
-            onClick={() => setActiveSection('previousMeets')}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeSection === 'previousMeets' 
-                ? 'bg-gray-700 text-white' 
-                : 'text-gray-300 hover:bg-gray-700/50'
-            }`}
-          >
-            Previous Meets
-          </button>
-          <button
-            onClick={() => setActiveSection('friends')}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeSection === 'friends' 
-                ? 'bg-gray-700 text-white' 
-                : 'text-gray-300 hover:bg-gray-700/50'
-            }`}
-          >
-            Friends
-          </button>
-          <button
-            onClick={() => setActiveSection('requests')}
-            className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
-              activeSection === 'requests' 
-                ? 'bg-gray-700 text-white' 
-                : 'text-gray-300 hover:bg-gray-700/50'
-            }`}
-          >
-            Incoming Requests
-          </button>
+        
+        <nav className="flex-1">
+          <ul className="space-y-2">
+            <li>
+              <button
+                onClick={() => setActiveComponent('meet')}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  activeComponent === 'meet' ? 'bg-blue-600' : 'hover:bg-gray-700'
+                } text-white`}
+              >
+                New Meeting
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActiveComponent('friends')}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  activeComponent === 'friends' ? 'bg-blue-600' : 'hover:bg-gray-700'
+                } text-white`}
+              >
+                Friends
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActiveComponent('search')}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  activeComponent === 'search' ? 'bg-blue-600' : 'hover:bg-gray-700'
+                } text-white`}
+              >
+                Add Friends
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActiveComponent('requests')}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  activeComponent === 'requests' ? 'bg-blue-600' : 'hover:bg-gray-700'
+                } text-white`}
+              >
+                Friend Requests
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => setActiveComponent('previous')}
+                className={`w-full text-left px-4 py-2 rounded-lg ${
+                  activeComponent === 'previous' ? 'bg-blue-600' : 'hover:bg-gray-700'
+                } text-white`}
+              >
+                Previous Meetings
+              </button>
+            </li>
+          </ul>
         </nav>
+
+        <button
+          onClick={handleLogout}
+          className="mt-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+        >
+          Logout
+        </button>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
-        {renderContent()}
+      <div className="flex-1 p-8 overflow-y-auto">
+        {renderComponent()}
       </div>
-
-      {/* Right Sidebar */}
-      
     </div>
   );
 }
