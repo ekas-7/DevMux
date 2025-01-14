@@ -26,7 +26,7 @@ function HomeContent() {
             onClick={handleGetStarted}
             className="bg-white text-black px-6 py-3 rounded-xl text-2xl font-semibold shadow-lg 
             hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-black/10 hover:border-black/20">
-            {session ? 'Go to Dashboard' : 'Sign In'}
+            Sign In
           </button>
         </div>
       </main>
