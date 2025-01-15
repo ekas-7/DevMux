@@ -33,28 +33,34 @@ export default function IncomingRequests() {
     fetchRequests();
   }, []);
 
-  const handleAccept = async (id: string) => {
+  const handleAccept = async (id: string, senderEmail: string) => {
     try {
       const response = await fetch(`/api/friends/requests/${id}/accept`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ senderEmail }),
       });
       if (!response.ok) throw new Error('Failed to accept request');
       
-      // Remove the request from the list
       setRequests(requests.filter(request => request.id !== id));
     } catch (error) {
       console.error('Error accepting request:', error);
     }
   };
 
-  const handleReject = async (id: string) => {
+  const handleReject = async (id: string, senderEmail: string) => {
     try {
       const response = await fetch(`/api/friends/requests/${id}/reject`, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ senderEmail }),
       });
       if (!response.ok) throw new Error('Failed to reject request');
       
-      // Remove the request from the list
       setRequests(requests.filter(request => request.id !== id));
     } catch (error) {
       console.error('Error rejecting request:', error);
@@ -77,13 +83,13 @@ export default function IncomingRequests() {
               </div>
               <div className="space-x-2">
                 <button
-                  onClick={() => handleAccept(request.id)}
+                  onClick={() => handleAccept(request.id, request.sender.email)}
                   className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
                 >
                   Accept
                 </button>
                 <button
-                  onClick={() => handleReject(request.id)}
+                  onClick={() => handleReject(request.id, request.sender.email)}
                   className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
                 >
                   Reject

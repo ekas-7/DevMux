@@ -50,8 +50,28 @@ export default function Dashboard() {
     <div className="flex h-screen">
       {/* Left Sidebar */}
       <div className="w-64 bg-gray-800 h-full p-4 flex flex-col">
-        <div className="mb-8">
-          <span className="text-gray-300 text-lg">{session?.user?.name}</span>
+        <div className="mb-8 flex items-center space-x-3">
+          {session?.user?.image ? (
+            <img
+              src={session.user.image}
+              alt="Profile"
+              className="w-10 h-10 rounded-full"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
+              <span className="text-white text-lg">
+                {session?.user?.name?.charAt(0)}
+              </span>
+            </div>
+          )}
+          <div className="flex flex-col">
+            <span className="text-gray-300 text-lg truncate">
+              {session?.user?.name}
+            </span>
+            <span className="text-gray-400 text-sm truncate">
+              {session?.user?.email}
+            </span>
+          </div>
         </div>
         
         <nav className="flex-1">

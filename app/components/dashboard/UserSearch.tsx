@@ -38,18 +38,18 @@ export default function UserSearch() {
     }
   };
 
-  const sendFriendRequest = async (userId: string) => {
+  const sendFriendRequest = async (userEmail: string) => {
     try {
       const response = await fetch('/api/friends/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ receiverId: userId }),
+        body: JSON.stringify({ receiverEmail: userEmail }),
       });
       
       if (!response.ok) throw new Error('Failed to send friend request');
       
       // Remove user from search results and show success message
-      setSearchResults(results => results.filter(user => user.id !== userId));
+      setSearchResults(results => results.filter(user => user.email !== userEmail));
       setMessage('Friend request sent successfully!');
     } catch (error) {
       console.error('Error sending friend request:', error);
@@ -86,13 +86,13 @@ export default function UserSearch() {
       {searchResults.length > 0 && (
         <div className="space-y-2">
           {searchResults.map((user) => (
-            <div key={user.id} className="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
+            <div key={user.email} className="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
               <div>
-                <p className="text-white">{user.name}</p>
-                <p className="text-gray-400 text-sm">{user.email}</p>
+                <p key={`${user.id}-name`} className="text-white">{user.name}</p>
+                <p key={`${user.id}-email`} className="text-gray-400 text-sm">{user.email}</p>
               </div>
               <button
-                onClick={() => sendFriendRequest(user.id)}
+                onClick={() => sendFriendRequest(user.email)}
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
               >
                 Add Friend
