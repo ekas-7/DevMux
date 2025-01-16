@@ -1,7 +1,6 @@
 'use client';
 
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import Meet from '../components/dashboard/Meet';
