@@ -149,8 +149,8 @@ const Canvas: React.FC<CanvasProps> = ({
 
   return (
     <div
-      className="border-2 border-gray-300 mx-auto mt-4 overflow-hidden"
-      style={{ height: "600px", maxWidth: "1200px" }}
+      className="border-2 border-gray-300 mx-auto mt-4 overflow-hidden h-full w-full"
+    //   style={{ height: "600px", maxWidth: "1200px" }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}

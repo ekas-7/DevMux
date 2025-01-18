@@ -7,7 +7,7 @@ import { DrawingElement } from "./types";
 const Whiteboard: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>(null);
-  const [color, setColor] = useState<string>("#000000");
+  const [color, setColor] = useState<string>("#ffffff");
   const [elements, setElements] = useState<DrawingElement[]>([]);
   const [history, setHistory] = useState<DrawingElement[]>([]);
   const [tool, setTool] = useState<string>("pencil");
@@ -36,6 +36,17 @@ const Whiteboard: React.FC = () => {
     setHistory((prevHistory) =>
       prevHistory.filter((_, index) => index !== history.length - 1)
     );
+  };
+
+  const saveCanvas = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const image = canvas.toDataURL('image/png'); // Convert canvas content to PNG image
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'whiteboard.png'; // Set the filename for the download
+      link.click(); // Trigger download
+    }
   };
 
   return (
@@ -92,6 +103,13 @@ const Whiteboard: React.FC = () => {
               onClick={clearCanvas}
             >
               Clear
+            </button>
+
+            <button
+              className="px-4 py-2 bg-green-500 text-white rounded"
+              onClick={saveCanvas}
+            >
+              Save
             </button>
           </div>
         </div>
