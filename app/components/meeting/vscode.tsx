@@ -9,10 +9,10 @@ export function CodeEditor() {
   }
 
   return (
-    <div className="h-full flex flex-col bg-gray-900">
+    <div className="h-full flex flex-col bg-gray-800 rounded-2xl p-4">
       <textarea
         className="flex-grow mb-4 font-mono p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none
-        bg-gray-800 text-gray-100 border-gray-700"
+        bg-gray-800 text-gray-100 border-gray-700 "
         placeholder="Write your code here..."
         value={code}
         onChange={(e) => setCode(e.target.value)}
