@@ -2,7 +2,7 @@
 
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import rough from "roughjs";
-import type { CanvasProps, Point } from "./types";
+import type { CanvasProps } from "./types";
 
 const generator = rough.generator();
 

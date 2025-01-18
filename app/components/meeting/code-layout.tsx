@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import Split from "react-split";
 
 interface LeetCodeLayoutProps {
@@ -8,8 +8,7 @@ interface LeetCodeLayoutProps {
 }
 
 export function LeetCodeLayout({ sidebar, codeEditor, drawingCanvas }: LeetCodeLayoutProps) {
-  const horizontalGutterRef = useRef<HTMLDivElement | null>(null);
-  const verticalGutterRef = useRef<HTMLDivElement | null>(null);
+  
 
   const handleGutter = (direction: "horizontal" | "vertical") => () => {
     const gutter = document.createElement("div");

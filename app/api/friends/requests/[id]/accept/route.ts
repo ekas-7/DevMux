@@ -1,12 +1,8 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
 import { auth } from '@/lib/auth';
 
-export async function POST(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: Request) {
   try {
     const session = await auth();
     if (!session?.user?.email) {
@@ -14,11 +10,29 @@ export async function POST(
     }
 
     const { senderEmail } = await request.json();
-    const requestId = params.id;
 
-    // Accept the friend request
-    const friendRequest = await prisma.friendRequest.update({
-      where: { id: requestId },
+    if (!senderEmail) {
+      return NextResponse.json({ error: 'Sender email is required' }, { status: 400 });
+    }
+
+    // Verify the friend request exists and belongs to the user
+    const friendRequest = await prisma.friendRequest.findFirst({
+      where: {
+        senderEmail,
+        receiverEmail: session.user.email,
+      },
+    });
+
+    if (!friendRequest) {
+      return NextResponse.json({ error: 'Friend request not found' }, { status: 404 });
+    }
+
+    // Update the friend request status
+    await prisma.friendRequest.updateMany({
+      where: {
+        senderEmail,
+        receiverEmail: session.user.email,
+      },
       data: { status: 'accepted' },
     });
 
@@ -27,24 +41,27 @@ export async function POST(
       where: { email: session.user.email },
       data: {
         friends: {
-          connect: { email: friendRequest.senderEmail }
-        }
-      }
+          connect: { email: senderEmail },
+        },
+      },
     });
 
     // Add the reverse connection
     await prisma.user.update({
-      where: { email: friendRequest.senderEmail },
+      where: { email: senderEmail },
       data: {
         friends: {
-          connect: { email: session.user.email }
-        }
-      }
+          connect: { email: session.user.email },
+        },
+      },
     });
 
     return NextResponse.json({ message: 'Friend request accepted' });
   } catch (error) {
     console.error('Error accepting friend request:', error);
-    return new NextResponse('Internal Server Error', { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 },
+    );
   }
-} 
+}

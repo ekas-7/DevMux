@@ -20,11 +20,12 @@ export async function POST(req: Request) {
 
     return NextResponse.json(meeting);
   } catch (error) {
+    console.error('Error creating meeting:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.email) {
@@ -49,6 +50,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(meetings);
   } catch (error) {
+    console.error('Error fetching meetings:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 } 

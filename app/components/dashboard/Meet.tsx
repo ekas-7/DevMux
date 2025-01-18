@@ -11,6 +11,7 @@ export default function Meet() {
   const createMeeting = async () => {
     try {
       setIsLoading(true);
+      console.log(isLoading);
       const newRoomId = Math.random().toString(36).substring(7);
       
       const response = await fetch('/api/meetings', {
