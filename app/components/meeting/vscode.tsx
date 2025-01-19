@@ -27,7 +27,7 @@ ReactDOM.render(<App />, document.getElementById("root"));`,
 
   return (
     <SandpackProvider files={files} theme={sandpackDark} template="react">
-      <SandpackLayout style={{ height: "60vh" }}>
+      <SandpackLayout style={{ height: "70vh" }}>
         {/* sidebar -- isko rehn dena */}
         <SandpackFileExplorer style={{ height: "100%" }} />
 

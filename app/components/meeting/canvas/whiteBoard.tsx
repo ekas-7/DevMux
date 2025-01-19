@@ -3,6 +3,16 @@
 import React, { useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { DrawingElement } from "./types";
+import { 
+  Pencil, 
+  LineChart, 
+  Square, 
+  Palette, 
+  Undo2, 
+  Redo2, 
+  Trash,
+  Download
+} from "lucide-react";
 
 const Whiteboard: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,88 +51,99 @@ const Whiteboard: React.FC = () => {
   const saveCanvas = () => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const image = canvas.toDataURL('image/png'); // Convert canvas content to PNG image
+      const image = canvas.toDataURL('image/png');
       const link = document.createElement('a');
       link.href = image;
-      link.download = 'whiteboard.png'; // Set the filename for the download
-      link.click(); // Trigger download
+      link.download = 'whiteboard.png';
+      link.click();
     }
   };
 
+  const tools = [
+    { name: 'pencil', icon: Pencil },
+    { name: 'line', icon: LineChart },
+    { name: 'rect', icon: Square },
+  ];
+
   return (
-    <div className="container mx-auto px-4">
-      <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold text-center py-4">
-          Whiteboard
-        </h1>
-        
-        <div className="flex flex-wrap gap-4 justify-center items-center">
-          <div className="flex items-center gap-2">
-            <span>Color:</span>
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              className="w-8 h-8"
-            />
-          </div>
+    <div className="relative w-full max-h-full bg-gray-800 rounded-2xl overflow-hidden">
+      {/* Floating Navigation Bar */}
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-auto">
+        <div className="bg-gray-700/80 backdrop-blur-sm p-1.5 rounded-xl shadow-lg">
+          <div className="flex items-center gap-5">
+            {/* Tools Group */}
+            <div className="flex items-center space-x-3 bg-gray-600/50 p-1 rounded-lg">
+              {tools.map(({ name, icon: Icon }) => (
+                <button
+                  key={name}
+                  onClick={() => setTool(name)}
+                  className={`p-1 rounded-lg transition-all ${
+                    tool === name 
+                      ? 'bg-blue-500 text-white shadow-lg' 
+                      : 'text-gray-300 hover:bg-gray-500/80'
+                  }`}
+                >
+                  <Icon size={16} />
+                </button>
+              ))}
+            </div>
 
-          <div className="flex gap-4">
-            {["pencil", "line", "rect"].map((toolType) => (
-              <label key={toolType} className="flex items-center gap-1">
-                <input
-                  type="radio"
-                  name="tools"
-                  value={toolType}
-                  checked={tool === toolType}
-                  onChange={(e) => setTool(e.target.value)}
-                  className="form-radio"
-                />
-                <span className="capitalize">{toolType}</span>
-              </label>
-            ))}
-          </div>
+            {/* Color Picker */}
+            <div className="flex items-center space-x-3 bg-gray-600/50 p-1 rounded-lg">
+              <Palette size={16} className="text-gray-300" />
+              <input
+                type="color"
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className="w-8 h-8 rounded border-0 bg-transparent cursor-pointer"
+              />
+            </div>
 
-          <div className="flex gap-2">
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-              disabled={elements.length === 0}
-              onClick={undo}
-            >
-              Undo
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-              disabled={history.length < 1}
-              onClick={redo}
-            >
-              Redo
-            </button>
-            <button
-              className="px-4 py-2 bg-red-500 text-white rounded"
-              onClick={clearCanvas}
-            >
-              Clear
-            </button>
+            {/* Divider */}
+            <div className="h-8 w-px bg-gray-500"></div>
 
-            <button
-              className="px-4 py-2 bg-green-500 text-white rounded"
-              onClick={saveCanvas}
-            >
-              Save
-            </button>
+            {/* Actions Group */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={undo}
+                disabled={elements.length === 0}
+                className="p-1 text-gray-300 hover:bg-gray-600/50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Undo2 size={16} />
+              </button>
+              <button
+                onClick={redo}
+                disabled={history.length < 1}
+                className="p-1 text-gray-300 hover:bg-gray-600/50 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Redo2 size={16} />
+              </button>
+              <button
+                onClick={clearCanvas}
+                className="p-1 text-red-400 hover:bg-gray-600/50 rounded-lg transition-colors"
+              >
+                <Trash size={16} />
+              </button>
+              <button
+                onClick={saveCanvas}
+                className="p-1 text-green-400 hover:bg-gray-600/50 rounded-lg transition-colors"
+              >
+                <Download size={16} />
+              </button>
+            </div>
           </div>
         </div>
-
-        <Canvas
-          canvasRef={canvasRef}
-          ctx={ctx}
-          color={color}
-          setElements={setElements}
-          elements={elements}
-          tool={tool}
-        />
       </div>
+
+      {/* Canvas */}
+      <Canvas
+        canvasRef={canvasRef}
+        ctx={ctx}
+        color={color}
+        setElements={setElements}
+        elements={elements}
+        tool={tool}
+      />
     </div>
   );
 };

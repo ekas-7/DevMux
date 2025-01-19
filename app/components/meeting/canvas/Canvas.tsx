@@ -1,9 +1,8 @@
-// components/Canvas.tsx
 "use client";
 
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import rough from "roughjs";
-import type { CanvasProps, Point } from "./types";
+import type { CanvasProps } from "./types";
 
 const generator = rough.generator();
 
@@ -21,19 +20,28 @@ const Canvas: React.FC<CanvasProps> = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.height = window.innerHeight * 2;
-    canvas.width = window.innerWidth * 2;
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-    
-    const context = canvas.getContext("2d");
-    if (!context) return;
+    const updateCanvasSize = () => {
+      canvas.height = window.innerHeight * 2;
+      canvas.width = window.innerWidth * 2;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      
+      const context = canvas.getContext("2d");
+      if (!context) return;
 
-    context.strokeStyle = color;
-    context.lineWidth = 5;
-    context.lineCap = "round";
-    context.scale(2, 2);
-    ctx.current = context;
+      context.strokeStyle = color;
+      context.lineWidth = 5;
+      context.lineCap = "round";
+      context.scale(2, 2);
+      ctx.current = context;
+    };
+
+    updateCanvasSize();
+    window.addEventListener('resize', updateCanvasSize);
+
+    return () => {
+      window.removeEventListener('resize', updateCanvasSize);
+    };
   }, []);
 
   useEffect(() => {
@@ -98,7 +106,6 @@ const Canvas: React.FC<CanvasProps> = ({
           })
         );
       } else if (ele.element === "pencil" && ele.path) {
-        // Create a properly typed path array for roughjs
         const pathPoints = ele.path.map(point => [point.x, point.y] as [number, number]);
         roughCanvas.linearPath(pathPoints as Array<[number, number]>, {
           stroke: ele.stroke,
@@ -149,13 +156,12 @@ const Canvas: React.FC<CanvasProps> = ({
 
   return (
     <div
-      className="border-2 border-gray-300 mx-auto mt-4 overflow-hidden h-full w-full"
-    //   style={{ height: "600px", maxWidth: "1200px" }}
+      className="w-full h-full rounded-2xl overflow-hidden"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef} className="bg-gray-800 rounded-2xl" />
     </div>
   );
 };

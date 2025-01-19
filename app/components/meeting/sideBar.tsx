@@ -7,11 +7,11 @@ export function Sidebar({ roomId }: { roomId: string }) {
   const [activeTab, setActiveTab] = useState("chat");
 
   return (
-    <div className="w-full h-full bg-gray-800 ">
+    <div className="w-full h-full bg-gray-800 rounded-2xl ">
       <div className="grid w-full grid-cols-3 border-b border-gray-700 ">
         <button
           onClick={() => setActiveTab("chat")}
-          className={`p-2 text-center text-gray-300 hover:bg-gray-700 transition-colors ${
+          className={`p-2 text-center text-gray-300 hover:bg-gray-700 hover:rounded-tl-2xl transition-colors ${
             activeTab === "chat" ? "border-b-2 border-blue-500 text-white" : ""
           }`}
         >
@@ -27,7 +27,7 @@ export function Sidebar({ roomId }: { roomId: string }) {
         </button>
         <button
           onClick={() => setActiveTab("ai")}
-          className={`p-2 text-center text-gray-300 hover:bg-gray-700 transition-colors ${
+          className={`p-2 text-center text-gray-300 hover:bg-gray-700 hover:rounded-tr-2xl transition-colors ${
             activeTab === "ai" ? "border-b-2 border-blue-500 text-white" : ""
           }`}
         >

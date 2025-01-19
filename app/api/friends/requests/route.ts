@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { auth } from '@/lib/auth';
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await auth();
     if (!session?.user?.email) {
@@ -26,6 +26,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(requests);
   } catch (error) {
+    console.error('Error fetching friend requests:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(request);
   } catch (error) {
+    console.error('Error creating friend request:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 } 
