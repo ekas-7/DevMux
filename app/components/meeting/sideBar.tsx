@@ -1,10 +1,10 @@
-import { useState } from "react"
-import { ChatSection } from "./chat-section"
-import { VideoCallSection } from "./videoCall"
-import { AIChatSection } from "./aiChatSection"
+import { useState } from "react";
+import { ChatSection } from "./chat-section";
+import { VideoCallSection } from "./videoCall";
+import { AIChatSection } from "./aiChatSection";
 
-export function Sidebar() {
-  const [activeTab, setActiveTab] = useState("chat")
+export function Sidebar({ roomId }: { roomId: string }) {
+  const [activeTab, setActiveTab] = useState("chat");
 
   return (
     <div className="w-full h-full bg-gray-800 ">
@@ -34,13 +34,12 @@ export function Sidebar() {
           AI Chat
         </button>
       </div>
-      
+
       <div className="bg-gray-800">
         {activeTab === "chat" && <ChatSection />}
-        {activeTab === "video" && <VideoCallSection />}
+        {activeTab === "video" && <VideoCallSection roomId={roomId} />}
         {activeTab === "ai" && <AIChatSection />}
       </div>
     </div>
-  )
+  );
 }
-

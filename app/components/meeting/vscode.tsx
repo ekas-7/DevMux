@@ -1,29 +1,47 @@
-import { useState } from "react"
+import { useState } from "react";
+import {
+  SandpackProvider,
+  SandpackLayout,
+  SandpackFileExplorer,
+  SandpackCodeEditor,
+  SandpackPreview,
+} from "@codesandbox/sandpack-react";
+import { sandpackDark } from "@codesandbox/sandpack-themes";
 
 export function CodeEditor() {
-  const [code, setCode] = useState("")
+  const files = {
+    "/App.js": {
+      code: `export default function App() {
+  return <h1>Hello, world!</h1>;
+}`,
+      active: true,
+    },
+    "/index.js": {
+      code: `import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
 
-  const handleRunCode = () => {
-    console.log("Running code:", code)
-    // Implement code execution logic here
-  }
+ReactDOM.render(<App />, document.getElementById("root"));`,
+    },
+  };
 
   return (
-    <div className="h-full flex flex-col bg-gray-900">
-      <textarea
-        className="flex-grow mb-4 font-mono p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none
-        bg-gray-800 text-gray-100 border-gray-700"
-        placeholder="Write your code here..."
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-      />
-      <button 
-        onClick={handleRunCode}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-      >
-        Run Code
-      </button>
-    </div>
-  )
-}
+    <SandpackProvider files={files} theme={sandpackDark} template="react">
+      <SandpackLayout style={{ height: "60vh" }}>
+        {/* sidebar -- isko rehn dena */}
+        <SandpackFileExplorer style={{ height: "100%" }} />
 
+        {/* tabs */}
+        <SandpackCodeEditor
+          style={{ height: "100%" }}
+          closableTabs
+          showTabs
+          wrapContent
+        />
+
+        {/* code running */}
+        <SandpackPreview style={{ height: "100%" }} />
+      </SandpackLayout>
+    </SandpackProvider>
+  );
+}

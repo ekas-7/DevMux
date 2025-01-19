@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import UserSearch from './UserSearch';
+import { useEffect, useState } from "react";
+import UserSearch from "./UserSearch";
 
 interface Friend {
   id: string;
@@ -18,12 +18,12 @@ export default function Friends() {
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        const response = await fetch('/api/friends');
-        if (!response.ok) throw new Error('Failed to fetch friends');
+        const response = await fetch("/api/friends");
+        if (!response.ok) throw new Error("Failed to fetch friends");
         const data = await response.json();
         setFriends(data);
       } catch (error) {
-        console.error('Error fetching friends:', error);
+        console.error("Error fetching friends:", error);
       } finally {
         setIsLoading(false);
       }
@@ -32,36 +32,43 @@ export default function Friends() {
     fetchFriends();
   }, []);
 
-  const sendMeetingInvite = async (friendId: string) => {
+  // Generate a LiveKit-compatible room ID
+  const generateRoomId = () => {
+    const timestamp = Date.now().toString(36); // Base36-encoded timestamp
+    const randomPart = Math.random().toString(36).substring(2, 10); // 8-character random string
+    return `room_${timestamp}_${randomPart}`;
+  };
+
+  const sendMeetingInvite = async (friendEmail: string) => {
     try {
-      const newRoomId = Math.random().toString(36).substring(7);
-      
+      const newRoomId = generateRoomId();
+
       // Create the meeting
-      const meetingResponse = await fetch('/api/meetings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const meetingResponse = await fetch("/api/meetings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ roomId: newRoomId }),
       });
 
-      if (!meetingResponse.ok) throw new Error('Failed to create meeting');
+      if (!meetingResponse.ok) throw new Error("Failed to create meeting");
       const meeting = await meetingResponse.json();
 
       // Send the invitation
-      const inviteResponse = await fetch('/api/meetings/invite', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const inviteResponse = await fetch("/api/meetings/invite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           meetingId: meeting.id,
-          friendId,
+          friendEmail, // Corrected here
         }),
       });
 
-      if (!inviteResponse.ok) throw new Error('Failed to send invitation');
-      
+      if (!inviteResponse.ok) throw new Error("Failed to send invitation");
+
       // Redirect to the meeting room
       window.location.href = `/meeting/${newRoomId}`;
     } catch (error) {
-      console.error('Error sending meeting invite:', error);
+      console.error("Error sending meeting invite:", error);
     }
   };
 
@@ -75,7 +82,7 @@ export default function Friends() {
           onClick={() => setShowSearch(!showSearch)}
           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
         >
-          {showSearch ? 'Hide Search' : 'Add Friends'}
+          {showSearch ? "Hide Search" : "Add Friends"}
         </button>
       </div>
 
@@ -87,11 +94,16 @@ export default function Friends() {
 
       <div className="grid gap-4">
         {friends.map((friend) => (
-          <div key={friend.email} className="bg-gray-800 rounded-lg p-4 flex items-center justify-between">
+          <div
+            key={friend.email}
+            className="bg-gray-800 rounded-lg p-4 flex items-center justify-between"
+          >
             <div className="flex items-center space-x-4">
-              <div className={`w-3 h-3 rounded-full ${
-                friend.status === 'online' ? 'bg-green-500' : 'bg-gray-500'
-              }`} />
+              <div
+                className={`w-3 h-3 rounded-full ${
+                  friend.status === "online" ? "bg-green-500" : "bg-gray-500"
+                }`}
+              />
               <div>
                 <p className="text-white">{friend.name}</p>
                 <p className="text-gray-400 text-sm">{friend.email}</p>
@@ -99,7 +111,7 @@ export default function Friends() {
             </div>
             <div className="space-x-2">
               <button
-                onClick={() => sendMeetingInvite(friend.id)}
+                onClick={() => sendMeetingInvite(friend.email)} // Pass friend.email
                 className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
               >
                 Invite to Meet

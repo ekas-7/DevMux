@@ -1,15 +1,12 @@
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { auth } from '@/lib/auth';
-
-
-
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
     const session = await auth();
     if (!session?.user?.email) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { meetingId, friendEmail } = await req.json();
@@ -18,13 +15,18 @@ export async function POST(req: Request) {
       where: { id: meetingId },
       data: {
         participants: {
-          connect: { email: friendEmail }
-        }
+          connect: { email: friendEmail },
+        },
       },
     });
 
+    console.log(NextResponse.json(updatedMeeting));
+
     return NextResponse.json(updatedMeeting);
   } catch (error) {
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-} 
+}
