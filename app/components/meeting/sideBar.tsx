@@ -54,7 +54,7 @@ export function Sidebar({ roomId }: { roomId: string }) {
       </div>
 
       {/* Copy Room ID Section */}
-      <div className="p-4 bg-gray-900 border-t border-gray-700 flex items-center justify-between">
+      <div className="p-4 bg-inherit border-t border-gray-700 flex items-center justify-between">
         <span className="text-sm text-gray-400">Room ID: {roomId}</span>
         <button
           onClick={copyRoomId}
