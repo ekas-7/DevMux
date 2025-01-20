@@ -112,7 +112,7 @@ export default function Meet() {
               value={inputRoomId}
               onChange={(e) => setInputRoomId(e.target.value)}
               placeholder="Enter Room ID"
-              className="w-full px-4 py-2 border-2 rounded focus:ring focus:ring-purple-500"
+              className="w-full px-4 py-2 border-2 rounded focus:ring focus:ring-purple-500 bg-inherit"
             />
             <button
               onClick={() => joinMeeting(inputRoomId)}
