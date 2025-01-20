@@ -15,7 +15,7 @@ export default function Home({
 
   return (
     <LeetCodeLayout
-      sidebar={<Sidebar roomId={roomId} />}
+      sidebar={<Sidebar roomId={roomId}  />}
       codeEditor={<CodeEditor />}
       drawingCanvas={<DrawingCanvas />}
     />

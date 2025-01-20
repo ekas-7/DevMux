@@ -25,22 +25,21 @@ ReactDOM.render(<App />, document.getElementById("root"));`,
   };
 
   return (
-    <SandpackProvider files={files} theme={sandpackDark} template="react">
-      <SandpackLayout style={{ height: "70vh" }}>
-        {/* sidebar -- isko rehn dena */}
-        <SandpackFileExplorer style={{ height: "100%" }} />
-
-        {/* tabs */}
-        <SandpackCodeEditor
-          style={{ height: "100%" }}
-          closableTabs
-          showTabs
-          wrapContent
-        />
-
-        {/* code running */}
-        <SandpackPreview style={{ height: "100%" }} />
-      </SandpackLayout>
-    </SandpackProvider>
+    <div className="bg-gray-800 rounded-2xl overflow-hidden">
+      <SandpackProvider files={files} theme={sandpackDark} template="react">
+        <SandpackLayout style={{ height: "67.5vh" }}>
+          <SandpackFileExplorer style={{ height: "100%" }} />
+          <SandpackCodeEditor
+            style={{ height: "100%" }}
+            closableTabs
+            showTabs
+            wrapContent
+          />
+          <SandpackPreview style={{ height: "100%" }} />
+        </SandpackLayout>
+      </SandpackProvider>
+    </div>
   );
 }
+
+export default CodeEditor;

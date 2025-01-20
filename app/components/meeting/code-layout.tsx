@@ -70,7 +70,7 @@ export function LeetCodeLayout({ sidebar, codeEditor, drawingCanvas }: LeetCodeL
         onDragStart={() => handleDragStart("vertical")}
         onDragEnd={() => handleDragEnd("vertical")}
       >
-        <main className="bg-black p-3 pl-1 pb-1 overflow-y-auto scrollbar-none scrollbar-thumb-gray-500 scrollbar-track-gray-700">
+        <main className="bg-black p-3 pl-1 pb-1 overflow-y-auto scrollbar-none scrollbar-thumb-gray-500 scrollbar-track-gray-700 ">
           {codeEditor}
         </main>
 

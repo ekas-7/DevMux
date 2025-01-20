@@ -7,7 +7,7 @@ export function Sidebar({ roomId }: { roomId: string }) {
   const [activeTab, setActiveTab] = useState("chat");
 
   return (
-    <div className="w-full h-full bg-gray-800 rounded-2xl ">
+    <div className="w-full h-full bg-[#151515] rounded-2xl ">
       <div className="grid w-full grid-cols-3 border-b border-gray-700 ">
         <button
           onClick={() => setActiveTab("chat")}

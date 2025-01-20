@@ -66,7 +66,7 @@ const Whiteboard: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full max-h-full bg-gray-800 rounded-2xl overflow-hidden">
+    <div className="relative w-full max-h-full bg-[#151515] rounded-2xl overflow-hidden">
       {/* Floating Navigation Bar */}
       <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-auto">
         <div className="bg-gray-700/80 backdrop-blur-sm p-1.5 rounded-xl shadow-lg">

@@ -161,7 +161,7 @@ const Canvas: React.FC<CanvasProps> = ({
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <canvas ref={canvasRef} className="bg-gray-800 rounded-2xl" />
+      <canvas ref={canvasRef} className="bg-[#151515] rounded-2xl" />
     </div>
   );
 };
