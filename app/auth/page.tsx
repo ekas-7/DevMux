@@ -39,7 +39,7 @@ export default function AuthPage() {
         }
       `}</style>
 
-      <div className="max-w-md w-full space-y-8 p-8 bg-black/40 backdrop-blur-sm rounded-xl border border-gray-800 relative z-10">
+      <div className="max-w-md w-full space-y-8 p-8 bg-black/20 backdrop-blur-sm rounded-xl border border-gray-800 relative z-10">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-6">DevMux</h1>
           <div className="flex justify-center gap-4 mb-8">
