@@ -32,10 +32,9 @@ export default function Friends() {
     fetchFriends();
   }, []);
 
-  // Generate a LiveKit-compatible room ID
   const generateRoomId = () => {
-    const timestamp = Date.now().toString(36); // Base36-encoded timestamp
-    const randomPart = Math.random().toString(36).substring(2, 10); // 8-character random string
+    const timestamp = Date.now().toString(36);
+    const randomPart = Math.random().toString(36).substring(2, 10);
     return `room_${timestamp}_${randomPart}`;
   };
 
@@ -43,7 +42,6 @@ export default function Friends() {
     try {
       const newRoomId = generateRoomId();
 
-      // Create the meeting
       const meetingResponse = await fetch("/api/meetings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,26 +51,22 @@ export default function Friends() {
       if (!meetingResponse.ok) throw new Error("Failed to create meeting");
       const meeting = await meetingResponse.json();
 
-      // Send the invitation
       const inviteResponse = await fetch("/api/meetings/invite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           meetingId: meeting.id,
-          friendEmail, // Corrected here
+          friendEmail,
         }),
       });
 
       if (!inviteResponse.ok) throw new Error("Failed to send invitation");
 
-      // Redirect to the meeting room
       window.location.href = `/meeting/${newRoomId}`;
     } catch (error) {
       console.error("Error sending meeting invite:", error);
     }
   };
-
-  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="space-y-6">
@@ -92,34 +86,55 @@ export default function Friends() {
         </div>
       )}
 
-      <div className="grid gap-4">
-        {friends.map((friend) => (
-          <div
-            key={friend.email}
-            className="bg-gray-800 rounded-lg p-4 flex items-center justify-between"
-          >
-            <div className="flex items-center space-x-4">
-              <div
-                className={`w-3 h-3 rounded-full ${
-                  friend.status === "online" ? "bg-green-500" : "bg-gray-500"
-                }`}
-              />
-              <div>
-                <p className="text-white">{friend.name}</p>
-                <p className="text-gray-400 text-sm">{friend.email}</p>
+      {isLoading ? (
+        // Skeleton Loader
+        <div className="grid gap-4">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div
+              key={index}
+              className="bg-gray-800 rounded-lg p-4 flex items-center justify-between animate-pulse"
+            >
+              <div className="flex items-center space-x-4">
+                <div className="w-3 h-3 rounded-full bg-gray-600" />
+                <div className="flex flex-col space-y-2">
+                  <div className="w-32 h-4 bg-gray-600 rounded-md" />
+                  <div className="w-24 h-4 bg-gray-600 rounded-md" />
+                </div>
+              </div>
+              <div className="w-28 h-10 bg-gray-600 rounded-lg" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {friends.map((friend) => (
+            <div
+              key={friend.email}
+              className="bg-gray-800 rounded-lg p-4 flex items-center justify-between"
+            >
+              <div className="flex items-center space-x-4">
+                <div
+                  className={`w-3 h-3 rounded-full ${
+                    friend.status === "online" ? "bg-green-500" : "bg-gray-500"
+                  }`}
+                />
+                <div>
+                  <p className="text-white">{friend.name}</p>
+                  <p className="text-gray-400 text-sm">{friend.email}</p>
+                </div>
+              </div>
+              <div className="space-x-2">
+                <button
+                  onClick={() => sendMeetingInvite(friend.email)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+                >
+                  Invite to Meet
+                </button>
               </div>
             </div>
-            <div className="space-x-2">
-              <button
-                onClick={() => sendMeetingInvite(friend.email)} // Pass friend.email
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
-              >
-                Invite to Meet
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

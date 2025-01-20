@@ -38,15 +38,19 @@ export default function Meet() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gray-800 rounded-lg p-6">
+      <div className=" rounded-lg p-6">
         <h2 className="text-2xl font-bold mb-4">Start a New Meeting</h2>
-        <button
-          onClick={createMeeting}
-          disabled={isLoading}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
-        >
-          {isLoading ? "Creating..." : "Create Meeting"}
-        </button>
+        {isLoading ? (
+          // Skeleton Loader for the button
+          <div className="w-36 h-12 bg-gray-700 rounded-lg animate-pulse"></div>
+        ) : (
+          <button
+            onClick={createMeeting}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg"
+          >
+            Create Meeting
+          </button>
+        )}
         {roomId && (
           <div className="mt-4">
             <p className="text-gray-300">Room ID: {roomId}</p>

@@ -19,14 +19,17 @@ export default function UserSearch() {
       setMessage('Please enter a search term');
       return;
     }
-    
+
     setIsLoading(true);
     setMessage('');
+    setSearchResults([]); // Clear previous results
+
     try {
       const response = await fetch(`/api/users/search?q=${encodeURIComponent(searchTerm.trim())}`);
       if (!response.ok) throw new Error('Failed to search users');
       const data = await response.json();
       setSearchResults(data);
+
       if (data.length === 0) {
         setMessage('No users found');
       }
@@ -45,11 +48,11 @@ export default function UserSearch() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ receiverEmail: userEmail }),
       });
-      
+
       if (!response.ok) throw new Error('Failed to send friend request');
-      
+
       // Remove user from search results and show success message
-      setSearchResults(results => results.filter(user => user.email !== userEmail));
+      setSearchResults((results) => results.filter((user) => user.email !== userEmail));
       setMessage('Friend request sent successfully!');
     } catch (error) {
       console.error('Error sending friend request:', error);
@@ -64,7 +67,7 @@ export default function UserSearch() {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           placeholder="Search users by name or email"
           className="flex-1 px-4 py-2 rounded-lg bg-gray-700 text-white"
         />
@@ -83,24 +86,38 @@ export default function UserSearch() {
         </p>
       )}
 
-      {searchResults.length > 0 && (
+      {isLoading ? (
         <div className="space-y-2">
-          {searchResults.map((user) => (
-            <div key={user.email} className="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
-              <div>
-                <p key={`${user.id}-name`} className="text-white">{user.name}</p>
-                <p key={`${user.id}-email`} className="text-gray-400 text-sm">{user.email}</p>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="flex justify-between items-center bg-gray-800 p-4 rounded-lg animate-pulse">
+              <div className="space-y-2">
+                <div className="h-4 bg-gray-700 rounded w-32"></div>
+                <div className="h-3 bg-gray-700 rounded w-48"></div>
               </div>
-              <button
-                onClick={() => sendFriendRequest(user.email)}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
-              >
-                Add Friend
-              </button>
+              <div className="h-10 bg-gray-700 rounded w-24"></div>
             </div>
           ))}
         </div>
+      ) : (
+        searchResults.length > 0 && (
+          <div className="space-y-2">
+            {searchResults.map((user) => (
+              <div key={user.email} className="flex justify-between items-center bg-gray-800 p-4 rounded-lg">
+                <div>
+                  <p className="text-white">{user.name}</p>
+                  <p className="text-gray-400 text-sm">{user.email}</p>
+                </div>
+                <button
+                  onClick={() => sendFriendRequest(user.email)}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
+                >
+                  Add Friend
+                </button>
+              </div>
+            ))}
+          </div>
+        )
       )}
     </div>
   );
-} 
+}
