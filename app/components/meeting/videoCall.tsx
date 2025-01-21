@@ -10,6 +10,7 @@ import {
 } from "@livekit/components-react";
 
 import "@livekit/components-styles";
+import { Chat } from "@livekit/components-react";
 
 import { useEffect, useState } from "react";
 import { Track } from "livekit-client";
@@ -19,6 +20,7 @@ export function VideoCallSection({ roomId }: { roomId: string }) {
   const { data: session } = useSession(); // Get session data
   const name = session?.user?.name || "guest-user"; // Use session name or fallback
   const [token, setToken] = useState("");
+  const [activeTab, setActiveTab] = useState("video"); // State for the active tab (video or chat)
 
   useEffect(() => {
     if (!roomId || !name) return; // Wait until roomId and name are available
@@ -49,11 +51,45 @@ export function VideoCallSection({ roomId }: { roomId: string }) {
       token={token}
       serverUrl={"wss://devmux-l0abrbfe.livekit.cloud"}
       data-lk-theme="default"
-      style={{ height: "100dvh" }}
+      style={{ height: "80vh" }} // Make sure the room fills the entire viewport
     >
-      <MyVideoConference />
-      <RoomAudioRenderer />
-      <ControlBar />
+      {/* Tab buttons */}
+      <div className="flex border-b border-gray-300 mb-4">
+        <button
+          onClick={() => setActiveTab("video")}
+          className={`flex-1 py-2 text-center text-sm font-medium ${
+            activeTab === "video"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+        >
+          Video Call
+        </button>
+        <button
+          onClick={() => setActiveTab("chat")}
+          className={`flex-1 py-2 text-center text-sm font-medium ${
+            activeTab === "chat"
+              ? "text-blue-600 border-b-2 border-blue-600"
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+        >
+          Chat
+        </button>
+      </div>
+
+      {/* Conditionally render based on the active tab */}
+      <div className="w-full flex">
+        {activeTab === "video" && (
+          <div className="w-full ">
+            <MyVideoConference />
+          </div>
+        )}
+        {activeTab === "chat" && (
+          <div>
+            <MyChat />
+          </div>
+        )}
+      </div>
     </LiveKitRoom>
   );
 }
@@ -66,12 +102,32 @@ function MyVideoConference() {
     ],
     { onlySubscribed: false }
   );
+
   return (
     <GridLayout
       tracks={tracks}
-      style={{ height: "calc(100vh - var(--lk-control-bar-height))" }}
+      className="w-full "
+      style={{
+        height: "calc(90vh - var(--lk-control-bar-height))", // Adjust the height to exclude control bar
+        maxHeight: "70vh", // Prevent overflow
+      }}
     >
       <ParticipantTile />
     </GridLayout>
+  );
+}
+
+function MyChat() {
+  return (
+    <div
+      className="flex justify-center w-full "
+      style={{
+        height: "calc(100vh - var(--lk-control-bar-height))", // Adjust the height to exclude control bar
+      }}
+    >
+      <div className="w-full max-w-md">
+        <Chat />
+      </div>
+    </div>
   );
 }
