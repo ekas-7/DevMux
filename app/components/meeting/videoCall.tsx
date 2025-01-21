@@ -1,11 +1,9 @@
 "use client";
 
 import {
-  ControlBar,
   GridLayout,
   LiveKitRoom,
   ParticipantTile,
-  RoomAudioRenderer,
   useTracks,
 } from "@livekit/components-react";
 

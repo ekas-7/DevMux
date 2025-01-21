@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, JSX } from "react";
 import { MessageCircle, Send, Clipboard } from "lucide-react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -27,7 +27,7 @@ const Chatbot: React.FC = () => {
     // Split the text into normal text and code blocks
     let match: RegExpExecArray | null;
     while ((match = regex.exec(text)) !== null) {
-      const [fullMatch, code] = match;
+      const [, code] = match;
       const startIndex = match.index;
 
       // Add normal text before the code block
