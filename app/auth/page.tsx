@@ -1,9 +1,12 @@
-'use client';
+"use client";
 
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { Code, Palette, MessageCircle } from 'lucide-react';
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { Code, Palette, MessageCircle } from "lucide-react";
+import { HeroHighlight } from "@/components/ui/hero-highlight";
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
+import Image from "next/image";
 
 export default function AuthPage() {
   const { data: session } = useSession();
@@ -11,58 +14,57 @@ export default function AuthPage() {
 
   useEffect(() => {
     if (session) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }, [session, router]);
 
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: '/dashboard' });
+    signIn("google", { callbackUrl: "/dashboard" });
   };
 
+  const commonButtonClasses =
+    "inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-600 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full";
+  const words = `Experience DevMux With  One Click`;
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 animate-gradient bg-[length:400%_400%] bg-gradient-to-br from-purple-900 via-black to-gray-900" 
-          style={{
-            animation: 'gradient 10s ease infinite',
-            backgroundSize: '400% 400%',
-          }}
-        />
-      </div>
-      
-      <style jsx global>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
-
-      <div className="max-w-md w-full space-y-8 p-8 bg-black/20 backdrop-blur-sm rounded-xl border border-gray-800 relative z-10">
+    <HeroHighlight className="relative py-12 md:py-20 px-4 overflow-hidden">
+      <div className="w-full max-w-sm md:max-w-md mx-auto space-y-6 p-6 md:p-8 bg-black/20 backdrop-blur-sm rounded-lg border border-gray-800 relative z-10">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-6">DevMux</h1>
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex items-center justify-center gap-2 md:gap-5 mb-4 md:mb-6">
+            <Image
+              src="/devmux.svg"
+              alt="DevMux Logo"
+              width={60}
+              height={60}
+              className="rounded-lg"
+            />
+            <h1 className="text-2xl md:text-5xl font-bold text-white">
+              DevMux
+            </h1>
+          </div>
+          <TextGenerateEffect words={words}  />
+
+          <div className="flex justify-center gap-3 md:gap-5 mt-6 md:mt-4">
             <div className="flex items-center text-gray-400">
-              <Code className="w-5 h-5 mr-1" />
-              <span>Code</span>
+              <Code className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="text-sm md:text-base">Code</span>
             </div>
             <div className="flex items-center text-gray-400">
-              <Palette className="w-5 h-5 mr-1" />
-              <span>Design</span>
+              <Palette className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="text-sm md:text-base">Design</span>
             </div>
             <div className="flex items-center text-gray-400">
-              <MessageCircle className="w-5 h-5 mr-1" />
-              <span>Discuss</span>
+              <MessageCircle className="w-4 h-4 md:w-5 md:h-5 mr-1 md:mr-2" />
+              <span className="text-sm md:text-base">Discuss</span>
             </div>
           </div>
         </div>
-        
+
         <button
+          className={commonButtonClasses}
           onClick={handleGoogleSignIn}
-          className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-100 text-gray-900 font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
+          aria-label="Sign in with Google"
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 md:w-6 md:h-6 mr-2" viewBox="0 0 24 24">
             <path
               fill="currentColor"
               d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -83,6 +85,6 @@ export default function AuthPage() {
           Sign in with Google
         </button>
       </div>
-    </div>
+    </HeroHighlight>
   );
 }
