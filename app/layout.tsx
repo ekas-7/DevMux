@@ -7,9 +7,9 @@ import ClientProvider from "./providers";
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "OrbStack - Fast, light Docker Desktop alternative",
+  title: "DevMux",
   description:
-    "The fast, light, and easy way to run Docker containers and Linux. Develop at lightspeed with our Docker Desktop alternative.",
+    "AI-powered platform that seamlessly integrates system design, coding, and team communication",
 }
 
 export default function RootLayout({
