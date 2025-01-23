@@ -11,6 +11,7 @@ export default function Home({
 }: {
   params: Promise<{ roomId: string }>;
 }) {
+
   const { roomId } = use(params); // Unwrap the promise using React's `use()`
 
   return (

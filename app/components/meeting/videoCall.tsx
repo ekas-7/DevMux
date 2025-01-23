@@ -16,7 +16,7 @@ import { useSession } from "next-auth/react"; // Import useSession
 
 export function VideoCallSection({ roomId }: { roomId: string }) {
   const { data: session } = useSession(); // Get session data
-  const name = session?.user?.name || "guest-user"; // Use session name or fallback
+  const name = session?.user?.name; // Use session name or fallback
   const [token, setToken] = useState("");
   const [activeTab, setActiveTab] = useState("video"); // State for the active tab (video or chat)
 

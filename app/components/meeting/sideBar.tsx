@@ -3,6 +3,7 @@ import { VideoCallSection } from "./videoCall";
 import Chatbot from "./aiChatSection";
 import { Copy } from "lucide-react";
 
+
 export function Sidebar({ roomId }: { roomId: string }) {
   const [activeTab, setActiveTab] = useState("video");
   const [showCopiedAlert, setShowCopiedAlert] = useState(false);
