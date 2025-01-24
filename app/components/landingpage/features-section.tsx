@@ -15,8 +15,8 @@ export default function FeaturesSectionDemo() {
   const words = `We provide a wide range of features to help you build your project.`;
   const features = [
     {
-      title: "Track issues effectively",
-      description: "Track and manage your project issues with ease using our intuitive interface.",
+      title: "User-Friendly Interface",
+      description: "Easily track and manage your project issues with our user-friendly interface.",
       skeleton: <SkeletonOne />,
       className: "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
     },
@@ -27,8 +27,8 @@ export default function FeaturesSectionDemo() {
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
     },
     {
-      title: "Watch our AI on YouTube",
-      description: "Whether it's you or Tyler Durden, you can get to know about our product on YouTube",
+      title: "What is DevMux ?",
+      description: "Watch our video to see what DevMux is all about",
       skeleton: <SkeletonThree />,
       className: "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
     },
