@@ -45,6 +45,7 @@ module.exports = {
           },
         },
       },
+      
       colors: {
         border: "var(--border)",
         input: "var(--input)",
@@ -82,11 +83,18 @@ module.exports = {
       },
       backgroundImage: {
         "cosmic-drift": "linear-gradient(to right, rgb(123, 104, 238), rgb(0, 255, 255))",
+      
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      
+      backgroundSize: {
+        "grid-small": "20px 20px",
+        "grid-medium": "40px 40px",
+        "grid-large": "80px 80px",
       },
     },
   },
