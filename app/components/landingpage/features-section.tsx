@@ -9,9 +9,10 @@ import { SkeletonFour } from "./features/skelton-four"
 import { SkeletonFive } from "./features/skelton-five"
 import { SkeletonSix } from "./features/skelton-six"
 import MatrixGridBackground from "./Matrix"
-
+import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export default function FeaturesSectionDemo() {
+  const words = `We provide a wide range of features to help you build your project.`;
   const features = [
     {
       title: "Track issues effectively",
@@ -35,7 +36,7 @@ export default function FeaturesSectionDemo() {
       title: "Deploy in seconds",
       description:
         "With our blazing fast, state of the art, cutting edge, we are so back cloud services (read AWS) - you can deploy your model in seconds.",
-      skeleton: <SkeletonFour />,
+      skeleton: <SkeletonSix />,
       className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },
     {
@@ -47,36 +48,38 @@ export default function FeaturesSectionDemo() {
     {
       title: "Analyze with precision",
       description: "Gain deep insights into your data with our advanced analytics tools.",
-      skeleton: <SkeletonSix />,
+      skeleton: <SkeletonFour />,
       className: "col-span-1 lg:col-span-3",
     },
   ]
 
   return (
+    
     <MatrixGridBackground className="min-h-screen p-24">
-    <div className="relative z-20 py-10 lg:py-40 max-w-6xl mx-auto ">
+      <div className="text-center px-4 sm:px-0 max-w-7xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl font-semibold text-black dark:text-white">
+              What Exactly is DevMux ?
+            </h1>
+            <h2 className="text-4xl sm:text-5xl md:text-[4rem] lg:text-[6rem] font-bold mt-4 leading-tight mb-4">
+              <span className="bg-cosmic-drift bg-clip-text text-transparent">
+                Features &
+              </span>{" "}
+              Demo{" "}
+              
+            </h2>
+            
+          </div>
+          <TextGenerateEffect words={words}  />
+    <div className="relative z-20  lg:py-40 max-w-7xl mx-auto ">
       {/* Grid background with dense, subtle grid */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-grid-white/5 dark:bg-grid-black/10 bg-[size:20px_20px] opacity-50 z-[-1]" />
-        <div className="absolute inset-0 bg-grid-neutral-200/20 dark:bg-grid-neutral-800/20 bg-[size:40px_40px] opacity-30 z-[-1]" />
-      </div>
+    
+  {/* Grid background with dense, subtle grid */}
 
-      <div className="absolute inset-0 bg-gradient-radial from-transparent via-white/80 to-white dark:via-black/80 dark:to-black z-[-1]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-white dark:from-black dark:via-black/80 dark:to-black z-[-1]" />
 
-      <div className="px-8">
-        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
-          Packed with thousands of features
-        </h4>
 
-        <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          From Image generation to video generation, Everything AI has APIs for literally everything. It can even create
-          this website copy for you.
-        </p>
-      </div>
 
       <div className="relative">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
+        <div className="grid grid-cols-1 lg:grid-cols-6 -mt-8 xl:border rounded-lg dark:border-neutral-800 bg-black/65">
           {features.map((feature) => (
             <FeatureCard key={feature.title} className={feature.className}>
               <FeatureTitle>{feature.title}</FeatureTitle>
