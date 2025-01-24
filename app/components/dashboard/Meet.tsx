@@ -55,7 +55,7 @@ export default function Meet() {
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Create Meeting Card */}
-        <div className="border-2 border-blue-500/20 rounded-lg p-6 shadow">
+        <div className="border-2 border-gray-800 rounded-lg p-6 shadow">
           <div className="flex items-center space-x-2 mb-4">
             <Video className="w-6 h-6 text-blue-500" />
             <h2 className="text-lg font-semibold">Start a New Meeting</h2>
@@ -70,7 +70,7 @@ export default function Meet() {
             >
               {isLoading ? (
                 <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-1 border-gray-800 border-t-transparent rounded-full animate-spin" />
                   <span>Creating...</span>
                 </div>
               ) : (
@@ -101,7 +101,7 @@ export default function Meet() {
         </div>
 
         {/* Join Meeting Card */}
-        <div className="border-2 border-purple-500/20 rounded-lg p-6 shadow">
+        <div className="border-2 border-gray-800 rounded-lg p-6 shadow">
           <div className="flex items-center space-x-2 mb-4">
             <Users className="w-6 h-6 text-purple-500" />
             <h2 className="text-lg font-semibold">Join an Existing Meeting</h2>
@@ -112,7 +112,7 @@ export default function Meet() {
               value={inputRoomId}
               onChange={(e) => setInputRoomId(e.target.value)}
               placeholder="Enter Room ID"
-              className="w-full px-4 py-2 border-2 rounded focus:ring focus:ring-purple-500 bg-inherit"
+              className="w-full px-4 py-2 border-2 rounded ring-gray-800 focus:ring-white bg-inherit"
             />
             <button
               onClick={() => joinMeeting(inputRoomId)}
