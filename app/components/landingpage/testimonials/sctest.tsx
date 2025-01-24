@@ -36,7 +36,7 @@ const testimonials: Testimonial[] = [
 ];
 
 const TestimonialCard: React.FC<Testimonial> = ({ name, title, quote }) => (
-    <div className="bg-black/80 border border-gray-800 p-8 rounded-lg text-white my-6 flex-shrink-0 backdrop-blur-xl">
+    <div className="bg-black/80 border border-gray-800 p-8 rounded-lg text-white my-6 flex-shrink-0 backdrop-blur-xl hover:border-blue-600">
     <div className="flex items-center mb-6 space-x-6">
       <Avatar className="w-12 h-12">
         <AvatarImage src={`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}`} alt={name} />
