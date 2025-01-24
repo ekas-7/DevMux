@@ -21,8 +21,8 @@ export default function FeaturesSectionDemo() {
       className: "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
     },
     {
-      title: "Capture pictures with AI",
-      description: "Capture stunning photos effortlessly using our advanced AI technology.",
+      title: "Chatting and Video Conferencing",
+      description: "Seamlessly connect with others through engaging real-time chat and high-quality video conferencing.",
       skeleton: <SkeletonTwo />,
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
     },
