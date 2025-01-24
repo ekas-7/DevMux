@@ -34,8 +34,8 @@ export default function FeaturesSectionDemo() {
         className: "border-b col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
       },
       {
-        title: "Lightning-Fast Deployment",
-        description: "Leverage our cloud-native infrastructure to deploy applications and models with unprecedented speed and reliability.",
+        title: "LLM Powered",
+        description: "Our platform leverages the power of LLMs to provide you with the best possible experience.",
         skeleton: <SkeletonSix />,
         className: " border-b col-span-1 lg:col-span-3 border-b  dark:border-neutral-800",
       },

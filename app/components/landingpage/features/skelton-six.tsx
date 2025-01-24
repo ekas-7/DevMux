@@ -1,22 +1,39 @@
+import Image from "next/image";
 
 export const SkeletonSix = () => {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="w-full max-w-md p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
-          <div className="flex justify-between items-end h-32 mb-4">
-            <div className="w-1/6 bg-blue-500 dark:bg-blue-400 h-1/3"></div>
-            <div className="w-1/6 bg-blue-500 dark:bg-blue-400 h-2/3"></div>
-            <div className="w-1/6 bg-blue-500 dark:bg-blue-400 h-full"></div>
-            <div className="w-1/6 bg-blue-500 dark:bg-blue-400 h-1/2"></div>
-            <div className="w-1/6 bg-blue-500 dark:bg-blue-400 h-3/4"></div>
-          </div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 dark:bg-neutral-700 rounded"></div>
-            <div className="h-4 bg-gray-200 dark:bg-neutral-700 rounded w-5/6"></div>
-          </div>
-        </div>
+  return (
+    <div className="flex items-center justify-center h-[80%] overflow-hidden">
+      {/* Scrolling container */}
+      <div className="flex animate-scroll space-x-4">
+        {/* Original images */}
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        {/* Duplicate images */}
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
+        <Image src="/LLM.svg" alt="LLM" width={250} height={250} />
       </div>
-    )
-  }
-  
-  
+
+      {/* Styles */}
+      <style jsx>{`
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+
+        .animate-scroll {
+          animation: scroll 10s linear infinite;
+          display: flex;
+          width: calc(250px * 8); /* Width = number of images × image width */
+        }
+      `}</style>
+    </div>
+  );
+};
