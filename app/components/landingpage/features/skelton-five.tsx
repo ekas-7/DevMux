@@ -1,19 +1,34 @@
+import Link from "next/link";
+import { Zap } from "lucide-react";
 
 export const SkeletonFive = () => {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="w-full max-w-md p-4 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
-          <div className="flex items-center space-x-4 mb-4">
-            <div className="w-10 h-10 bg-blue-500 rounded-full"></div>
-            <div className="w-10 h-10 bg-green-500 rounded-full"></div>
-            <div className="w-10 h-10 bg-yellow-500 rounded-full"></div>
-          </div>
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 dark:bg-neutral-700 rounded"></div>
-            <div className="h-4 bg-gray-200 dark:bg-neutral-700 rounded w-5/6"></div>
-            <div className="h-4 bg-gray-200 dark:bg-neutral-700 rounded w-4/6"></div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  const commonButtonClasses = "group inline-flex h-[20rem] animate-shimmer items-center justify-center rounded-md border border-slate-600 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors hover:bg-[length:100%_100%] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 w-full";
+  
+  return (
+    <div className="w-full h-[85%] flex flex-col justify-center items-center">
+      <Link
+        href="/auth"
+        className="w-full max-w-xs"
+        aria-label="Sign Up or Log In"
+      >
+        <button
+          className={commonButtonClasses}
+          aria-label="Get Started"
+          type="button"
+        >
+          <span className="flex items-center justify-center">
+
+            <Zap 
+              className="font-thin h-10 w-10 transition-transform group-hover:scale-110 group-hover:rotate-12" 
+              aria-hidden="true" 
+            />
+          </span>
+        </button>
+      </Link>
+    </div>
+      
+  
+  );
+};
+
+export default SkeletonFive;

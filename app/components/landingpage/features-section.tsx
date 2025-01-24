@@ -13,45 +13,46 @@ import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
 export default function FeaturesSectionDemo() {
   const words = `We provide a wide range of features to help you build your project.`;
-  const features = [
-    {
-      title: "User-Friendly Interface",
-      description: "Easily track and manage your project issues with our user-friendly interface.",
-      skeleton: <SkeletonOne />,
-      className: "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Chatting and Video Conferencing",
-      description: "Seamlessly connect with others through engaging real-time chat and high-quality video conferencing.",
-      skeleton: <SkeletonTwo />,
-      className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
-    },
-    {
-      title: "What is DevMux ?",
-      description: "Watch our video to see what DevMux is all about",
-      skeleton: <SkeletonThree />,
-      className: "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Deploy in seconds",
-      description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud services (read AWS) - you can deploy your model in seconds.",
-      skeleton: <SkeletonSix />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
-    },
-    {
-      title: "Collaborate in real-time",
-      description: "Work together seamlessly with your team using our real-time collaboration features.",
-      skeleton: <SkeletonFive />,
-      className: "col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
-    },
-    {
-      title: "Analyze with precision",
-      description: "Gain deep insights into your data with our advanced analytics tools.",
-      skeleton: <SkeletonFour />,
-      className: "col-span-1 lg:col-span-3",
-    },
-  ]
+ 
+    const features = [
+      {
+        title: "Intuitive Project Management",
+        description: "Streamline your workflow with our intelligent issue tracking and management system, designed to boost team productivity.",
+        skeleton: <SkeletonOne />,
+        className: "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
+      },
+      {
+        title: "Seamless Communication",
+        description: "Connect instantly with built-in video conferencing and real-time chat, breaking down communication barriers across teams.",
+        skeleton: <SkeletonTwo />,
+        className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
+      },
+      {
+        title: "DevMux Explained",
+        description: "A comprehensive platform that revolutionizes team collaboration, project management, and deployment workflows.",
+        skeleton: <SkeletonThree />,
+        className: "border-b col-span-1 lg:col-span-3 lg:border-r dark:border-neutral-800",
+      },
+      {
+        title: "Lightning-Fast Deployment",
+        description: "Leverage our cloud-native infrastructure to deploy applications and models with unprecedented speed and reliability.",
+        skeleton: <SkeletonSix />,
+        className: " border-b col-span-1 lg:col-span-3 border-b  dark:border-neutral-800",
+      },
+      {
+        title: "It takes just one click",
+        description: "Experience Devmux in just one click",
+        skeleton: <SkeletonFive />,
+        className: "border-b col-span-1 lg:col-span-2 lg:border-r dark:border-neutral-800",
+      },
+      {
+        title: "Real-Time Devlopment",
+        description: "Develop your project in real-time with our seamless development workflow from any corner of the world.",
+        skeleton: <SkeletonFour />,
+        className: "col-span-1 lg:col-span-4",
+      }
+    
+    ];
 
   return (
     
