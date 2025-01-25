@@ -2,11 +2,15 @@ import React from "react";
 import { ArrowRight } from "lucide-react";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
-export function MagicSection() {
+type MagicSectionProps = {
+  id?: string;
+};
+
+export function MagicSection({ id }: MagicSectionProps) {
   const words = `We provide a wide range of Pricing Plans for different use cases`;
 
   return (
-    <section className="relative py-24 overflow-y-auto  bg-gradient-to-b from-black via-gray-800 to-black p-4 mb-20">
+    <section className="relative py-24 overflow-y-auto  bg-gradient-to-b from-black via-gray-800 to-black p-4 mb-20" id={id}>
       <div className="text-center px-4 sm:px-0 max-w-7xl mx-auto mb-20">
         <h2 className="text-4xl sm:text-5xl md:text-[4rem] lg:text-[6rem] font-bold  leading-tight mb-4">
           <span className="bg-cosmic-drift bg-clip-text text-transparent">

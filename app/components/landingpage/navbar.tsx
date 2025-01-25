@@ -9,8 +9,7 @@ export function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      // Set blurred state based on a specific scroll height threshold
-      setBlurred(scrollY > 580); // Change 500 to the desired height in pixels
+      setBlurred(scrollY > 580);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -19,13 +18,27 @@ export function Navbar() {
     };
   }, []);
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault(); // Prevent the default link behavior
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 border-border transition-all duration-300 ${
-        blurred ? "backdrop-blur-md  bg-black/50" : "bg-transparent"
+        blurred ? "backdrop-blur-md bg-black/50" : "bg-transparent"
       }`}
     >
       <div className="container flex items-center justify-between h-14 px-4 mx-auto max-w-7xl">
+      <a
+            href="#home"
+            onClick={(e) => handleSmoothScroll(e, "home")}
+            className="text-muted-foreground hover:text-foreground"
+            aria-label="View Pricing"
+          >
         <div className="flex items-center gap-2">
           <Image
             src="/devmux.svg"
@@ -36,21 +49,35 @@ export function Navbar() {
           />
           <span className="text-lg font-semibold">DevMux</span>
         </div>
+        </a>
         <div className="flex items-center gap-4">
-          <Link
-            href="/pricing"
+        <a
+            href="#features"
+            onClick={(e) => handleSmoothScroll(e, "features")}
+            className="text-muted-foreground hover:text-foreground"
+            aria-label="View Pricing"
+          >
+            Features
+          </a>
+          {/* Smooth Scroll Link */}
+          <a
+            href="#pricing"
+            onClick={(e) => handleSmoothScroll(e, "pricing")}
             className="text-muted-foreground hover:text-foreground"
             aria-label="View Pricing"
           >
             Pricing
-          </Link>
-          <Link
-            href="/about"
+          </a>
+          
+          <a
+            href="#testimonials"
+            onClick={(e) => handleSmoothScroll(e, "testimonials")}
             className="text-muted-foreground hover:text-foreground"
-            aria-label="Explore Features"
+            aria-label="View Pricing"
           >
-            Features
-          </Link>
+
+              Testimonial
+          </a>
           <Link
             href="/auth"
             className="text-muted-foreground hover:text-foreground"

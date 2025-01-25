@@ -5,7 +5,12 @@ import { motion, useAnimation } from "framer-motion";
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 import { useEffect } from "react";
 import Link from "next/link";
-export function HeroSection() {
+
+
+ interface HeroPropinterface{
+      id? : string;
+ }
+export function HeroSection({id}:HeroPropinterface) {
 
   const textControls = useAnimation();
   const buttonControls = useAnimation();
@@ -48,8 +53,9 @@ export function HeroSection() {
   const commonButtonClasses = "inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-600 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 mx-4";
 
   return (
-    <HeroHighlight className="relative pt-32 pb-16 px-4 overflow-hidden">
-      <div className="relative text-center mx-auto max-w-4xl">
+    <div id={id}>
+        <HeroHighlight className="relative pt-32 pb-16 px-4 overflow-hidden "  >
+      <div className="relative text-center mx-auto max-w-4xl" >
         <div className="absolute inset-0 bg-gradient-to-tr from-cosmic-drift/10 to-background opacity-50"></div>
 
         <motion.div className="relative z-10">
@@ -126,5 +132,7 @@ export function HeroSection() {
         </motion.div>
       </div>
     </HeroHighlight>
+    </div>
+  
   );
 }

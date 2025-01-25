@@ -11,7 +11,11 @@ import { SkeletonSix } from "./features/skelton-six"
 import MatrixGridBackground from "./Matrix"
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 
-export default function FeaturesSectionDemo() {
+interface FeatureProp {
+  id?: string;
+}
+
+export default function FeaturesSectionDemo({id}:FeatureProp) {
   const words = `We provide a wide range of features to help you build your project.`;
  
     const features = [
@@ -55,8 +59,8 @@ export default function FeaturesSectionDemo() {
     ];
 
   return (
-    
-    <MatrixGridBackground className="min-h-screen p-24">
+    <div id={id}>
+       <MatrixGridBackground className="min-h-screen p-24">
       <div className="text-center px-4 sm:px-0 max-w-7xl mx-auto">
             <h1 className="text-3xl sm:text-4xl font-semibold text-black dark:text-white">
               What Exactly is DevMux ?
@@ -92,6 +96,8 @@ export default function FeaturesSectionDemo() {
       </div>
     </div>
     </MatrixGridBackground> 
+    </div>
+   
   )
 }
 

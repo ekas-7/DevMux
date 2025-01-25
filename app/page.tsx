@@ -9,11 +9,11 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <HeroSection />
+      <HeroSection id="home" />
       <Tab />
-      <FeaturesSection />
-      <MagicSection />
-      <TestimonialsSection />
+      <FeaturesSection id="features" />
+      <MagicSection id="pricing"/>
+      <TestimonialsSection id="testimonials"/>
      
       <Footer />
     </main>
