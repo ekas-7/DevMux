@@ -15,6 +15,20 @@ export function HeroSection({id}:HeroPropinterface) {
   const textControls = useAnimation();
   const buttonControls = useAnimation();
 
+
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLElement>,
+    targetId: string
+  ) => {
+    e.preventDefault(); // Optional for <button>
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    } else {
+      console.warn(`Element with id "${targetId}" not found.`);
+    }
+  };
+
   const textVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 50 },
     visible: (i: number) => ({
@@ -119,11 +133,11 @@ export function HeroSection({id}:HeroPropinterface) {
 
             <motion.div variants={buttonVariants} initial="initial" animate={buttonControls}>
               
-              <button
-                className={commonButtonClasses}
-                aria-label="Explore Pricing"
-
-              >
+            <button
+  className={commonButtonClasses}
+  aria-label="Explore Pricing"
+  onClick={(e) => handleSmoothScroll(e, "pricing")}
+>
                 Explore Pricing
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </button>
