@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/ekaspreetsinghatwal/DevMux/app/auth/layout.tsx"],"sourcesContent":["'use client';\n\nimport { SessionProvider } from 'next-auth/react';\n\nexport default function AuthLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return <SessionProvider>{children}</SessionProvider>;\n} "],"names":[],"mappings":";;;;AAEA;AAFA;;;AAIe,SAAS,WAAW,EACjC,QAAQ,EAGT;IACC,qBAAO,6LAAC,iJAAA,CAAA,kBAAe;kBAAE;;;;;;AAC3B;KANwB"}},
-    {"offset": {"line": 30, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
